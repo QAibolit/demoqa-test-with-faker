@@ -6,6 +6,10 @@ import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 import pages.components.ResultModalComponent;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import static com.codeborne.selenide.Condition.cssValue;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -71,10 +75,12 @@ public class PracticeFormPage {
         return this;
     }
 
-    public PracticeFormPage setBirthdayDate(String day, String month, String year) {
+    public PracticeFormPage setBirthdayDate(LocalDate birthdayDate) {
         dateOfBirthInput.click();
         calendar.shouldBeVisible();
-        calendar.setDate(day, month, year);
+        calendar.setDate(String.valueOf(birthdayDate.getDayOfMonth()),
+                birthdayDate.format(DateTimeFormatter.ofPattern("MMMM", Locale.ENGLISH)),
+                String.valueOf(birthdayDate.getYear()));
         return this;
     }
 

@@ -5,17 +5,25 @@ import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
 import utils.DataUtils;
 
+import java.time.LocalDate;
+
 public class PracticeFormTests extends BaseTest {
+
+    LocalDate birthdayDate = DataUtils.getRandomBirthdayDate();
 
     String firstName = DataUtils.getRandomFirstName(),
             lastName = DataUtils.getRandomLastName(),
             email = DataUtils.getRandomEmail(),
-            gender = DataUtils.getRandomItemFromArray(new String[]{"Male", "Female", "Other"}),
+            gender = DataUtils.getRandomItem("Male", "Female", "Other"),
             phone = DataUtils.getRandomPhoneNumber(),
+            birthdayDateAsString = DataUtils.getBirthdayDateAsString(birthdayDate),
             fullName = firstName + " " + lastName,
-            subject = "English",
-            hobby = DataUtils.getRandomItemFromArray(new String[]{"Sports", "Reading", "Music"}),
+            subject = DataUtils.getRandomItem("English", "Maths", "Physics", "Economics"),
+            hobby = DataUtils.getRandomItem("Sports", "Reading", "Music"),
+            picture = DataUtils.getRandomItem("hedgehog.jpg", "dino.jpeg", "fire.jpeg"),
             address = DataUtils.getRandomAddress(),
+            state = DataUtils.getRandomItem("NCR", "Uttar Pradesh", "Haryana", "Rajasthan"),
+            city = DataUtils.getRandomCity(state),
             redColor = "rgb(220, 53, 69)";
 
     PracticeFormPage practiceFormPage = new PracticeFormPage();
@@ -29,25 +37,25 @@ public class PracticeFormTests extends BaseTest {
                 .setEmail(email)
                 .setGender(gender)
                 .setPhone(phone)
-                .setBirthdayDate("3", "January", "2000")
+                .setBirthdayDate(birthdayDate)
                 .setSubject(subject)
                 .setHobbies(hobby)
-                .uploadPicture("uploadFiles/hedgehog.jpg")
+                .uploadPicture("uploadFiles/" + picture)
                 .setCurrentAddress(address)
-                .selectState("Uttar Pradesh")
-                .selectCity("Merrut")
+                .selectState(state)
+                .selectCity(city)
                 .submit()
                 .checkResultModalIsVisible()
                 .checkNameInResultModal(fullName)
                 .checkEmailInResultModal(email)
                 .checkGenderInResultModal(gender)
                 .checkPhoneInResultModal(phone)
-                .checkBirthdayInResultModal("03 January,2000")
+                .checkBirthdayInResultModal(birthdayDateAsString)
                 .checkSubjectsInResultModal(subject)
                 .checkHobbiesInResultModal(hobby)
-                .checkPictureNameInResultModal("hedgehog.jpg")
+                .checkPictureNameInResultModal(picture)
                 .checkAddressInResultModal(address)
-                .checkStateAndCityInResultModal("Uttar Pradesh Merrut");
+                .checkStateAndCityInResultModal(state + " " + city);
     }
 
     @Test

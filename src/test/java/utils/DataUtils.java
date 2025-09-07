@@ -2,8 +2,10 @@ package utils;
 
 import com.github.javafaker.Faker;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DataUtils {
 
@@ -33,11 +35,26 @@ public class DataUtils {
         return faker.address().fullAddress();
     }
 
-    public static int getRandomInt(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max);
+    public static String getRandomItem(String... options) {
+        return faker.options().option(options);
     }
 
-    public static String getRandomItemFromArray(String[] array) {
-        return array[getRandomInt(0, array.length)];
+    public static LocalDate getRandomBirthdayDate() {
+        return faker.date().birthday(1, 70).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public static String getBirthdayDateAsString(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM,yyyy", Locale.ENGLISH);
+        return date.format(formatter);
+    }
+
+    public static String getRandomCity(String state) {
+        return switch (state) {
+            case "NCR" -> getRandomItem("Delhi", "Gurgaon", "Noida");
+            case "Uttar Pradesh" -> getRandomItem("Agra", "Lucknow", "Merrut");
+            case "Haryana" -> getRandomItem("Karnal", "Panipat");
+            case "Rajasthan" -> getRandomItem("Jaipur", "Jaiselmer");
+            default -> throw new IllegalArgumentException("Передано несуществующее значение: " + state);
+        };
     }
 }
