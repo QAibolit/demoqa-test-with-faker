@@ -32,6 +32,7 @@ public class PracticeFormTests extends BaseTest {
     @DisplayName("Проверка полного заполнения формы регистрации")
     public void fillInAllFieldsOfPracticeFormTest() {
         practiceFormPage.openPage()
+                .closeBanners()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setEmail(email)
@@ -62,6 +63,7 @@ public class PracticeFormTests extends BaseTest {
     @DisplayName("Проверка заполнения обязательных полей формы регистрации")
     public void fillInRequiredFieldsOfPracticeFormTest() {
         practiceFormPage.openPage()
+                .closeBanners()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setGender(gender)
@@ -78,6 +80,7 @@ public class PracticeFormTests extends BaseTest {
     @DisplayName("Проверка частичного заполнения обязательных полей формы регистрации")
     public void fillInRequiredFieldsOfPracticeFormPartiallyTest() {
         practiceFormPage.openPage()
+                .closeBanners()
                 .submit()
                 .checkFirstNameFieldColor(redColor)
                 .checkLastNameFieldColor(redColor)

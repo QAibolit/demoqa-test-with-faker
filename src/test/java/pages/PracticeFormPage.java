@@ -44,9 +44,13 @@ public class PracticeFormPage {
 
     public PracticeFormPage openPage() {
         open("/automation-practice-form");
+        this.header.shouldHave(text("Practice Form"));
+        return this;
+    }
+
+    public PracticeFormPage closeBanners() {
         executeJavaScript("$('footer').remove();");
         executeJavaScript("$('#fixedban').remove();");
-        this.header.shouldHave(text("Practice Form"));
         return this;
     }
 

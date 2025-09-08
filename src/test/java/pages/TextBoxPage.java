@@ -21,9 +21,13 @@ public class TextBoxPage {
 
     public TextBoxPage openPage() {
         open("/text-box");
+        this.header.shouldHave(text("Text Box"));
+        return this;
+    }
+
+    public TextBoxPage closeBanners() {
         executeJavaScript("$('footer').remove();");
         executeJavaScript("$('#fixedban').remove();");
-        this.header.shouldHave(text("Text Box"));
         return this;
     }
 
